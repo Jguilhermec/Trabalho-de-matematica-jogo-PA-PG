@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+   <meta charset="UTF-8">
+
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <title>Desarme o Sistema: PA & PG</title>
+
+   <!-- Carregando Tailwind CSS -->
+
+   <script src="https://cdn.tailwindcss.com"></script>
+
+   <!-- Carregando Fontes Google: JetBrains Mono para números/terminais e Inter para UI -->
+
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+
+   <style>
+
+       :root {
+
+           --bg-dark: #090d16;
+
+           --panel-bg: #111827;
+
+           --cyan-glow: #06b6d4;
+
+           --magenta-glow: #d946ef;
+
+           --amber-glow: #f59e0b;
+
+           --red-glow: #ef4444;
+
+           --green-glow: #10b981;
+
+       }
+
+
+
+       body {
+
+           font-family: 'Inter', sans-serif;
+
+           background-color: var(--bg-dark);
+
+           color: #f3f4f6;
+
+           background-image:
+
+               radial-gradient(circle at 15% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
+
+               radial-gradient(circle at 85% 80%, rgba(217, 70, 239, 0.08) 0%, transparent 40%),
+
+               linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+
+               linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+
+           background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+
+           min-height: 100vh;
+
+           overflow-x: hidden;
+
+       }
+
+
+
+       .font-mono-tech {
+
+           font-family: 'JetBrains Mono', monospace;
+
+       }
+
+
+
+       /* Efeitos de brilho e bordas tecnológicas */
+
+       .cyber-card {
+
+           background: rgba(17, 24, 39, 0.92);
+
+           border: 1px solid rgba(75, 85, 99, 0.5);
+
+           box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+           backdrop-filter: blur(12px);
+
+       }
+
+
+
+       .glow-cyan {
+
+           box-shadow: 0 0 15px rgba(6, 182, 212, 0.35);
+
+           border-color: rgba(6, 182, 212, 0.7);
+
+       }
+
+
+
+       .glow-magenta {
+
+           box-shadow: 0 0 15px rgba(217, 70, 239, 0.35);
+
+           border-color: rgba(217, 70, 239, 0.7);
+
+       }
+
+
+
+       .glow-green {
+
+           box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+
+           border-color: rgba(16, 185, 129, 0.8);
+
+       }
+
+
+
+       .glow-red {
+
+           box-shadow: 0 0 18px rgba(239, 68, 68, 0.5);
+
+           border-color: rgba(239, 68, 68, 0.85);
+
+       }
+
+
+
+       /* Animação de pulso de alerta */
+
+       @keyframes pulseAlert {
+
+           0%, 100% { opacity: 1; transform: scale(1); }
+
+           50% { opacity: 0.65; transform: scale(0.98); }
+
+       }
+
+       .animate-alert {
+
+           animation: pulseAlert 1s infinite ease-in-out;
+
+       }
+
+
+
+       /* Animação de tremor ao errar */
+
+       @keyframes shake {
+
+           0%, 100% { transform: translateX(0); }
+
+           20%, 60% { transform: translateX(-8px); }
+
+           40%, 80% { transform: translateX(8px); }
+
+       }
+
+       .animate-shake {
+
+           animation: shake 0.4s ease-in-out;
+
+       }
+
+
+
+       /* Estilo dos botões táteis do teclado numérico */
+
+       .keypad-btn {
+
+           transition: all 0.1s ease;
+
+           user-select: none;
+
+       }
+
+       .keypad-btn:active {
+
+           transform: translateY(2px) scale(0.97);
+
+       }
+
+
+
+       /* Remove setas padrão do input number */
+
+       input[type=number]::-webkit-inner-spin-button,
+
+       input[type=number]::-webkit-outer-spin-button {
+
+           -webkit-appearance: none;
+
+           margin: 0;
+
+       }
+
+   </style>
+
+</head>
+
+<body class="flex flex-col items-center justify-center p-3 sm:p-6">
+
+
+
+   <!-- Container Principal do Terminal -->
+
+   <div id="game-container" class="w-full max-w-4xl cyber-card rounded-2xl overflow-hidden transition-all duration-300">
+
+      
+
+       <!-- Barra Superior de Status do Sistema -->
+
+       <header class="bg-gray-950/90 border-b border-gray-800 px-4 py-3 sm:px-6 flex flex-wrap items-center justify-between gap-3">
+
+           <div class="flex items-center gap-3">
+
+               <div id="status-led" class="w-3.5 h-3.5 rounded-full bg-amber-500 shadow-[0_0_10px_#f59e0b]"></div>
+
+               <div>
+
+                   <h1 class="text-sm sm:text-base font-extrabold tracking-wider uppercase text-gray-100 flex items-center gap-2">
+
+                       <span>PROTOCOLO: DESARME</span>
+
+                       <span class="text-xs px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-700/50 font-mono-tech">PA & PG</span>
+
+                   </h1>
+
+                   <p class="text-[11px] text-gray-400 hidden sm:block">Neutralize as 3 áreas de contenção antes da sobrecarga do núcleo</p>
+
+               </div>
+
+           </div>
+
+
+
+           <!-- Controles Superiores: Som & Fórmulas -->
+
+           <div class="flex items-center gap-2">
+
+               <button id="btn-formulas" onclick="toggleFormulas()" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-cyan-300 border border-cyan-800/60 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer">
+
+                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+
+                   <span>Fórmulas</span>
+
+               </<span style="font-size:10.5pt;font-family:"Courier New",monospace;color:rgb(255,150,
